@@ -2,6 +2,12 @@ from exceptions import NotImplementedError
 from random import randint
 
 class AbstractHierarchialCluster(object):
+    """This is an abstract object that represents a HierarchialCluster.
+    
+    This methods of this class must be overriden to specify the stopping
+    criteria and the metric.
+    """
+
     def __init__(self, clusterItems):
         self.cluster_items = clusterItems
         self.clusters = {}   
@@ -14,7 +20,11 @@ class AbstractHierarchialCluster(object):
             self.clusters[uid] = item
 
     def __generateUniqueId(self):
-        next_id = randint(0, 100)
+        """
+        Returns a unique id not yet used.
+        """    
+    
+        next_id = randint(0, 100000)
         if self.clusters.has_key(next_id):
             self.__generateUniqueId()
         return next_id
@@ -25,6 +35,11 @@ class AbstractHierarchialCluster(object):
         raise NotImplementedError()
 
     def getNextSetOfClosestClusters(self):
+        """
+        Returns the ClusterItem objects which are nearest to each other
+        based on the metric implemented by AbstractItem object.
+        """
+
 		minDistance = 99999
 		cluster1 = None
 		cluster2 = None
